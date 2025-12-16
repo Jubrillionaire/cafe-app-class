@@ -55,3 +55,20 @@ print(df.loc['2023-10-01'])
 print("Orders that are bigger than $10 in revenue:")
 
 print(df.query('Revenue > 10'))
+
+
+# Group by (Topic 13, 14)
+print("Barista Performance:")
+barista_performance = df.groupby('Barista')[['Revenue', 'Quantity']].sum()
+print(barista_performance)
+print("\n")
+
+
+# How much did each barista generate for each specific item  (Barista vs item)
+
+print ("Sales Matric (Item vs barista):")
+sales_matrix = df.pivot_table(index='Item', columns='Barista', values='Revenue', aggfunc='sum', fill_value=0)
+print(sales_matrix)
+print("\n")
+
+
