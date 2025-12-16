@@ -71,4 +71,19 @@ sales_matrix = df.pivot_table(index='Item', columns='Barista', values='Revenue',
 print(sales_matrix)
 print("\n")
 
+# Resampling to Daily totals (Topic 10)
+
+daily_revenue = df['Revenue'].resample('D').sum()
+print("Daily Revenue:")
+print(daily_revenue)
+
+
+# Get 2-day average
+print("2 day average")
+print(daily_revenue.rolling(window=2).mean())
+
+
+print("Day over day growth")
+growth = daily_revenue - daily_revenue.shift(1)
+print(growth)
 
