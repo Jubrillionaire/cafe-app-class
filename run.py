@@ -87,3 +87,54 @@ print("Day over day growth")
 growth = daily_revenue - daily_revenue.shift(1)
 print(growth)
 
+
+
+new_data = {
+    'Date': ['2023-10-04', '2023-10-04'],
+    'Item': ['Latte', 'Muffin'],
+    'Price': [4.50, 4.10],
+    'Quantity': [2, 1],
+    'Barista': ['Alice', 'Bob'],
+    'Revenue': [9.00, 4.10]
+}
+
+
+df_new_day = pd.DataFrame(new_data)
+df_new_day['Date'] = pd.to_datetime(df_new_day['Date'])
+df_new_day.set_index('Date', inplace=True)
+
+print("New Data: ")
+print(df_new_day)
+
+# concatenate data into existing data
+full_history =  pd.concat([df, df_new_day], axis=0)
+print("Full data")
+print(full_history)
+
+
+print("=======Merging cost data========")
+
+cost_data = {
+    'Item': ['Latte', 'Espresso', 'Muffin', 'Cappuccino'],
+    'Cost': [1.50, 0.80, 1.00, 1.20]
+}
+
+df_costs = pd.DataFrame(cost_data)
+print("Cost table")
+print(df_costs)
+
+full_history_reset = full_history.reset_index()
+df_with_costs = pd.merge(full_history_reset, df_costs, on='Item', how='left')
+
+print("Dataframe after merging cost")
+print(df_with_costs)
+
+df_with_costs['Profit'] = df_with_costs['Revenue'] - (df_with_costs['Cost'] * df_with_costs['Quantity'])
+print("Final report with profit")
+print(df_with_costs)
+
+print("Highest profit made")
+print(df_with_costs.sort_values(by='Profit', ascending=False))
+
+
+
